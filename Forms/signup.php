@@ -15,12 +15,10 @@
     </div>
 
 
-    <form id="signupForm">
+    <form id="signupForm" method="post" action="/bookstore/Global/validateForm.php">
         <div>
-            <label for="firstName">First Name</label>
-            <input type="text" id="firstname" name="firstName" required>
-            <label for="lastname">Last Name</label>
-            <input type="text" id="lastname" name="lastName" required>
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullname" name="fullName" required>
             <label for="email">Email Address</label>
             <input type="email" id="email" name="email" required>
             <label for="password">Password</label>

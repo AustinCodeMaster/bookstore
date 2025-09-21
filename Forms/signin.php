@@ -6,7 +6,7 @@
     <title>Sign In</title>
 </head>
 <body>
-        <form id="signupForm">
+        <form id="signupForm" method="get" action="/bookstore/Global/validateForm.php">
         <div>
             <label for="email">Email Address</label>
             <input type="email" id="email" name="email" required>

@@ -10,7 +10,7 @@ class dataBase
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             global $conf, $ObjSendMail, $mailCnt, $conn; // Access global configuration and mail object
 
-            $username = $_POST['username'];
+            $username = $_POST['fullname'];
             $email = $_POST['email'];
             $user_password = $_POST['password'];
             $GLOBALS['user_data'] = array(
@@ -19,7 +19,7 @@ class dataBase
                 'password' => $user_password,
             );
             //Insert the user into the database
-            $stmt = $conn->prepare("INSERT INTO users (username,email,user_password) VALUES (?,?,?)");
+            $stmt = $conn->prepare("INSERT INTO users (fullname,email,user_password) VALUES (?,?,?)");
             //Bind 4 strings: Name, Email, Password, Token
             $stmt->bind_param("sss", $username, $email, $user_password);
 
@@ -36,7 +36,7 @@ class dataBase
     public function displayUsers()
     {
         global $conn;
-        $username = $_GET['username'];
+        $username = $_GET['fullname'];
         $user_password = $_GET['password'];
         $GLOBALS['user_data_retrieval'] = array(
             'name' => $username,
@@ -44,7 +44,7 @@ class dataBase
         );
 
         try {
-            $stmt = $conn->prepare("SELECT username, email FROM users WHERE username=? AND user_password=?");
+            $stmt = $conn->prepare("SELECT fullname, email FROM users WHERE fullname=? AND user_password=?");
             $stmt->bind_param('ss', $username, $user_password);
             $stmt->execute();
             $result = $stmt->get_result();
