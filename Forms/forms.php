@@ -1,8 +1,4 @@
 <?php
-class forms
-{
-    public function signup()
-    {
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +10,13 @@ class forms
     <link href="<?php echo "Welcome"; ?>/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 </head>
+<?php
+class forms
+{
+    public function signup()
+    {
+?>
+
 <body>
         <form method="post" action="/bookstore/Global/validateForm.php" id="signUp">
             <div class="container-fluid">
@@ -47,7 +50,7 @@ class forms
         <button type="submit" class="btn btn-primary" name="<?php echo $name; ?>" value="<?php echo $value; ?>"><?php echo $value ?></button>
     <?php
     }
-    public function login()
+    public function signin()
     {
     ?>
         <form method="get" action="/bookstore/Global/validateForm.php" id="signin">
