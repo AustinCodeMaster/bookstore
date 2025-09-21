@@ -1,4 +1,4 @@
 <?php
 require 'forms.php';
-$Obj= new forms();
-$Obj ->signin();
+$Obj = new forms();
+$Obj->signup();

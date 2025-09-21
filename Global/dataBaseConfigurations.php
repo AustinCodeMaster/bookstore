@@ -1,14 +1,24 @@
 <?php
 
 //require_once '../classAutoLoad.php'; // Include the autoloader
+require "sendMail.php";
 
-class dataBase
+class dataBaseConfigurations
 {
+
 
     public function databaseinsertion()
     {
+        $ObjSendMail = new sendMail();
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            global $conf, $ObjSendMail, $mailCnt, $conn; // Access global configuration and mail object
+            global $conf; // Access global configuration
+            $conn = new mysqli('localhost', 'root', 'ManCity@254', 'basedata5');
+            $mailCnt = [
+                'name_from' => 'Benir Omenda',
+                'email_from' => 'benir.omenda@strathmore.edu',
+                'subject' => 'Connection Verified.',
+                'body' => 'This is to test for successful database connectivity'
+            ];
 
             $username = $_POST['fullname'];
             $email = $_POST['email'];
@@ -19,8 +29,8 @@ class dataBase
                 'password' => $user_password,
             );
             //Insert the user into the database
-            $stmt = $conn->prepare("INSERT INTO users (fullname,email,user_password) VALUES (?,?,?)");
-            //Bind 4 strings: Name, Email, Password, Token
+            $stmt = $conn->prepare("INSERT INTO users (username,email,user_password) VALUES (?,?,?)");
+            //Bind 3 strings: Name, Email, Password
             $stmt->bind_param("sss", $username, $email, $user_password);
 
             //We would like to send a verification email
@@ -44,7 +54,7 @@ class dataBase
         );
 
         try {
-            $stmt = $conn->prepare("SELECT fullname, email FROM users WHERE fullname=? AND user_password=?");
+            $stmt = $conn->prepare("SELECT username, email FROM users WHERE fullname=? AND user_password=?");
             $stmt->bind_param('ss', $username, $user_password);
             $stmt->execute();
             $result = $stmt->get_result();

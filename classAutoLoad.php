@@ -1,12 +1,21 @@
 <?php
-class ClassAutoload {
-    public static function register() {
-        spl_autoload_register(function ($className) {
-            $file = __DIR__ . "/classes/" . $className . ".php";
-            if (file_exists($file)) {
-                require_once $file;
-            }
-        });
-    }
-}
+require 'Plugins/PHPMailer/vendor/autoload.php';
+require_once "conf.php";
 
+$directories = ["Forms", "Layouts", "Global"];
+
+spl_autoload_register(function ($className) use ($directories) {
+    foreach ($directories as $directory) {
+        $filePath = __DIR__ . "/$directory/" . $className . '.php';
+        if (file_exists($filePath)) {
+            require_once $filePath;
+            return;
+        }
+    }
+});
+//Create an instance of HelloWorld
+
+//$ObjSendMail = new sendMail();
+$form = new forms();
+//$layout = new layouts();
+$dbaseObject = new dataBaseConfigurations();
