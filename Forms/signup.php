@@ -3,11 +3,15 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
+    <link href="<?php echo "Welcome"; ?>/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 </head>
+
 <body>
     <div class="signup-header">
         <h1>Create Account</h1>
@@ -32,4 +36,5 @@
         Already have an account? <a href="#" id="loginLink">Sign in here</a>
     </div>
 </body>
+
 </html>
