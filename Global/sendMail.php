@@ -1,17 +1,16 @@
 <?php
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
+require __DIR__ . '/../vendor/autoload.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 
-
-
-
 class sendMail
 {
-    public function send_Mail($conf, $mailCnt)
+    public function send_Mail($mailCnt)
     {
         $mail = new PHPMailer(true);
 
@@ -19,12 +18,12 @@ class sendMail
             //Server settings
             $mail->SMTPDebug = SMTP::DEBUG_OFF;                      //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = $conf['smtp_host'];                     //Set the SMTP server to send through
+            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = $conf['smtp_user'];                     //SMTP username
-            $mail->Password   = $conf['smtp_pass'];                               //SMTP password
+            $mail->Username   = 'benir.omenda@strathmore.edu';                     //SMTP username
+            $mail->Password   = 'jvvw ivdm buye uauw';                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = $conf['smtp_port'];                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
             $mail->setFrom($mailCnt['email_from'], $mailCnt['name_from']);

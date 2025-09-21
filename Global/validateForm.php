@@ -2,4 +2,3 @@
 require "dataBaseConfigurations.php";
 $UserObject = new dataBaseConfigurations();
 $UserObject->databaseinsertion();
-$suerObject->displayUsers();

@@ -11,7 +11,6 @@ class dataBaseConfigurations
     {
         $ObjSendMail = new sendMail();
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            global $conf; // Access global configuration
             $conn = new mysqli('localhost', 'root', 'ManCity@254', 'basedata5');
             $mailCnt = [
                 'name_from' => 'Benir Omenda',
@@ -35,7 +34,7 @@ class dataBaseConfigurations
 
             //We would like to send a verification email
             if ($stmt->execute()) {
-                $ObjSendMail->send_Mail($conf, $mailCnt);
+                $ObjSendMail->send_Mail($mailCnt);
                 echo "Registration successful, check your email to verify";
             } else {
                 echo "Error: " . $stmt->error;
