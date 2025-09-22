@@ -20,8 +20,8 @@ class sendMail
             $mail->isSMTP();                                            //Send using SMTP
             $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'benir.omenda@strathmore.edu';                     //SMTP username
-            $mail->Password   = '';                               //SMTP password
+            $mail->Username   = 'mbiririjoyce6@gmail.com';                     //SMTP username
+            $mail->Password   = 'klqz kmmk albu gjrm';                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
             $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
@@ -32,7 +32,7 @@ class sendMail
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = $mailCnt['subject'];
-            $mail->Body    = 'Hello ' . $GLOBALS['user_data']['name'] . ", Welcome to Benir's Application";
+            $mail->Body    = 'Hello ' . $GLOBALS['user_data']['name'] . ", Welcome to The Application";
             //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
             $mail->send();

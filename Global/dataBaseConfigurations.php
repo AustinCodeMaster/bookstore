@@ -11,10 +11,10 @@ class dataBaseConfigurations
     {
         $ObjSendMail = new sendMail();
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $conn = new mysqli('localhost', 'root', 'ManCity@254', 'basedata5');
+            $conn = new mysqli('localhost', 'bookstore_user', 'maria123#', 'bookstore');
             $mailCnt = [
-                'name_from' => 'Benir Omenda',
-                'email_from' => 'benir.omenda@strathmore.edu',
+                'name_from' => 'joyce mbiriri',
+                'email_from' => 'mbiririjoyce6@gmail.com',
                 'subject' => 'Connection Verified.',
                 'body' => 'This is to test for successful database connectivity'
             ];
