@@ -1,390 +1,227 @@
 <?php
-class layout{
+class layout {
     public function header($conf) {
         ?>
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="light">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="<?php print $conf['site_title']; ?>">
-    <meta name="author" content="<?php print implode(', ', $conf['site_authors']); ?>">
-    <meta name="generator" content="<?php print $conf['version']; ?>">
-    <title><?php print $conf['site_name']; ?> - Bookstore & Library</title>
+<html lang="en" data-bs-theme="auto">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="<?php print $conf['site_description']; ?>">
+      <meta name="author" content="<?php print implode(', ', $conf['site_authors']); ?>">
+      <meta name="generator" content="<?php print $conf['version']; ?>">
+      <title><?php print $conf['site_name']; ?> - <?php print $conf['site_title']; ?></title>
+      <link href="<?php print $conf['site_url']; ?>css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+      <link href="<?php print $conf['site_url']; ?>css/custom.css" rel="stylesheet">
+   </head>
+   <body>
+      <main>
+         <div class="container py-4">
+        <?php
+    }
     
-    <!-- Bootstrap CSS -->
-    <link href="<?php print $conf['site_url']; ?>css/bootstrap.min.css" rel="stylesheet">
+    public function navbar($conf, $current_page = '') {
+        if (empty($current_page)) {
+            $current_page = basename($_SERVER['PHP_SELF']);
+        }
+        ?>
+         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+               <a class="navbar-brand" href="./">
+                   <i class="fas fa-book"></i> <?php print $conf['site_name']; ?>
+               </a> 
+               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                   <span class="navbar-toggler-icon"></span>
+               </button> 
+               <div class="collapse navbar-collapse" id="navbarContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                     <li class="nav-item"> 
+                         <a class="nav-link <?php if($current_page == 'index.php') print 'active'; ?>" href="./">Home</a> 
+                     </li>
+                     <li class="nav-item"> 
+                         <a class="nav-link <?php if($current_page == 'books.php') print 'active'; ?>" href="books.php">Books</a> 
+                     </li>
+                     <li class="nav-item"> 
+                         <a class="nav-link <?php if($current_page == 'categories.php') print 'active'; ?>" href="categories.php">Categories</a> 
+                     </li>
+                     <li class="nav-item"> 
+                         <a class="nav-link <?php if($current_page == 'about.php') print 'active'; ?>" href="about.php">About</a> 
+                     </li>
+                  </ul>
+                  <ul class="navbar-nav ms-auto">
+                     <li class="nav-item">
+                         <a class="nav-link <?php if($current_page == 'cart.php') print 'active'; ?>" href="cart.php">
+                             <i class="fas fa-shopping-cart"></i> Cart
+                         </a>
+                     </li>
+                     <li class="nav-item"> 
+                         <a class="nav-link <?php if($current_page == 'signin.php') print 'active'; ?>" href="signin.php">Sign In</a> 
+                     </li>
+                     <li class="nav-item"> 
+                         <a class="nav-link <?php if($current_page == 'signup.php') print 'active'; ?>" href="signup.php">Sign Up</a> 
+                     </li>
+                  </ul>
+                  <form class="d-flex ms-3" action="search.php" method="GET">
+                      <input class="form-control me-2" type="search" name="q" placeholder="Search books...">
+                      <button class="btn btn-outline-light" type="submit">Search</button>
+                  </form>
+               </div>
+            </div>
+         </nav>
+    <?php
+    }
     
-    <!-- Custom CSS -->
-    <link href="<?php print $conf['site_url']; ?>css/custom.css" rel="stylesheet">
+    public function hero_banner($conf, $title = '', $subtitle = '') {
+        if (empty($title)) $title = "Welcome to " . $conf['site_name'];
+        if (empty($subtitle)) $subtitle = "Discover your next favorite book";
+        ?>
+            <div class="p-5 mb-4 bg-dark text-white rounded-3">
+               <div class="container-fluid py-5">
+                  <h1 class="display-5 fw-bold"><?php print $title; ?></h1>
+                  <p class="col-md-8 fs-4"><?php print $subtitle; ?></p>
+                  <a class="btn btn-primary btn-lg" href="books.php">Browse Books</a> 
+               </div>
+            </div>
+        <?php
+    }
     
-    <style>
-        .hero-section {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 80px 0;
-        }
-        
-        .category-card {
-            transition: transform 0.3s ease;
-            border: none;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            height: 100%;
-        }
-        
-        .category-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .book-card {
-            border: none;
-            transition: all 0.3s ease;
-            height: 100%;
-        }
-        
-        .book-card:hover {
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-        
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 1.5rem;
-        }
-        
-        .btn-bookstore {
-            background-color: #8B4513;
-            border-color: #8B4513;
-            color: white;
-        }
-        
-        .btn-bookstore:hover {
-            background-color: #654321;
-            border-color: #654321;
-        }
-        
-        .discount-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #dc3545;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
-        
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: #f8f9fa;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            font-size: 1.5rem;
-            color: #8B4513;
-        }
-    </style>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="./">
-                <i class="bi bi-book-half"></i>
-                <?php print $conf['site_name']; ?>
-            </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link <?php if(basename($_SERVER['PHP_SELF']) == 'index.php') print 'active'; ?>" href="./">
-                            <i class="bi bi-house"></i> Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-book"></i> Books
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-tags"></i> Categories
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-info-circle"></i> About
-                        </a>
-                    </li>
-                </ul>
-                
-                <div class="d-flex">
-                    <a class="btn btn-outline-light me-2" href="forms/signin.php">
-                        <i class="bi bi-box-arrow-in-right"></i> Sign In
-                    </a>
-                    <a class="btn btn-bookstore" href="forms/signup.php">
-                        <i class="bi bi-person-plus"></i> Sign Up
-                    </a>
+    public function book_card($book) {
+        ?>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 book-card">
+                <img src="<?php print $book['image'] ?? 'images/default-book.jpg'; ?>" 
+                     class="card-img-top" alt="<?php print $book['title']; ?>"
+                     style="height: 250px; object-fit: cover;">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title"><?php print htmlspecialchars($book['title']); ?></h5>
+                    <p class="card-text text-muted">by <?php print htmlspecialchars($book['author'] ?? 'Unknown Author'); ?></p>
+                    <p class="card-text flex-grow-1">
+                        <?php print htmlspecialchars(substr($book['description'] ?? '', 0, 100)); ?>...
+                    </p>
+                    <div class="mt-auto">
+                        <span class="h5 text-primary">$<?php print number_format($book['price'] ?? 0, 2); ?></span>
+                        <a href="book.php?id=<?php print $book['id']; ?>" class="btn btn-primary">View Details</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </nav>
-
-    <main>
-        <div class="container py-4">
         <?php
     }
-
-    public function navbar($conf) {
-        // Navigation is handled in header method
-    }
-
-    public function banner($conf) {
+    
+    public function featured_books($books) {
+        if (empty($books)) return;
         ?>
-        <!-- Hero Section -->
-        <section class="hero-section text-center mb-5">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <h1 class="display-5 fw-bold mb-4">Discover Your Next Favorite Book</h1>
-                        <p class="lead mb-4">Explore thousands of books across all genres. From bestsellers to hidden gems, find your perfect read.</p>
-                        <div class="d-flex justify-content-center gap-3 flex-wrap">
-                            <a href="forms/signup.php" class="btn btn-primary btn-lg px-4">
-                                <i class="bi bi-book"></i> Start Reading
-                            </a>
-                            <a href="#featured" class="btn btn-outline-light btn-lg px-4">
-                                <i class="bi bi-star"></i> Featured Books
-                            </a>
-                        </div>
-                    </div>
-                </div>
+        <div class="row mb-5">
+            <div class="col-12">
+                <h2 class="border-bottom pb-2">Featured Books</h2>
             </div>
-        </section>
+            <?php foreach ($books as $book): ?>
+                <?php $this->book_card($book); ?>
+            <?php endforeach; ?>
+        </div>
         <?php
     }
-
-    public function content($conf) {
+    
+    public function category_grid($categories) {
         ?>
-        <!-- Features Section -->
-        <section class="py-5">
-            <div class="container">
-                <div class="row text-center mb-5">
-                    <div class="col">
-                        <h2 class="h1 fw-bold">Why Choose Our Bookstore?</h2>
-                        <p class="lead">We offer the best reading experience for book lovers</p>
-                    </div>
-                </div>
-                
-                <div class="row g-4">
-                    <div class="col-md-4">
-                        <div class="text-center">
-                            <div class="feature-icon">
-                                <i class="bi bi-truck"></i>
-                            </div>
-                            <h4>Free Shipping</h4>
-                            <p class="text-muted">Free delivery on all orders over $25. Quick and reliable shipping worldwide.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-4">
-                        <div class="text-center">
-                            <div class="feature-icon">
-                                <i class="bi bi-collection"></i>
-                            </div>
-                            <h4>100,000+ Titles</h4>
-                            <p class="text-muted">Massive collection of books across all genres. Always something new to discover.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-4">
-                        <div class="text-center">
-                            <div class="feature-icon">
-                                <i class="bi bi-headset"></i>
-                            </div>
-                            <h4>24/7 Support</h4>
-                            <p class="text-muted">Our customer service team is always ready to help with any questions.</p>
-                        </div>
+        <div class="row">
+            <?php foreach ($categories as $category): ?>
+            <div class="col-md-3 mb-3">
+                <div class="card category-card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-<?php print $category['icon'] ?? 'book'; ?> fa-3x mb-3 text-primary"></i>
+                        <h5 class="card-title"><?php print $category['name']; ?></h5>
+                        <p class="card-text"><?php print $category['book_count'] ?? 0; ?> books</p>
+                        <a href="category.php?id=<?php print $category['id']; ?>" class="btn btn-outline-primary">Explore</a>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- Categories Section -->
-        <section class="py-5 bg-light">
-            <div class="container">
-                <div class="row mb-4">
-                    <div class="col">
-                        <h2 class="text-center mb-4">Popular Categories</h2>
-                    </div>
-                </div>
-                
-                <div class="row g-4">
-                    <?php
-                    $categories = [
-                        ['icon' => 'bi-stars', 'title' => 'Fantasy', 'desc' => 'Magical worlds and epic adventures'],
-                        ['icon' => 'bi-heart', 'title' => 'Romance', 'desc' => 'Love stories and heartwarming tales'],
-                        ['icon' => 'bi-rocket', 'title' => 'Sci-Fi', 'desc' => 'Future worlds and technology'],
-                        ['icon' => 'bi-search', 'title' => 'Mystery', 'desc' => 'Thrillers and detective stories']
-                    ];
-                    
-                    foreach ($categories as $category) {
-                        echo '
-                        <div class="col-md-3 col-6">
-                            <div class="card category-card text-center h-100">
-                                <div class="card-body">
-                                    <i class="' . $category['icon'] . ' bi-3x text-primary mb-3"></i>
-                                    <h5>' . $category['title'] . '</h5>
-                                    <p class="text-muted">' . $category['desc'] . '</p>
-                                </div>
-                            </div>
-                        </div>';
-                    }
-                    ?>
-                </div>
-            </div>
-        </section>
-
-        <!-- Featured Books -->
-        <section id="featured" class="py-5">
-            <div class="container">
-                <div class="row mb-4">
-                    <div class="col">
-                        <h2 class="text-center mb-4">Featured Books</h2>
-                        <p class="text-center lead">Discover this week\'s most popular titles</p>
-                    </div>
-                </div>
-                
-                <div class="row g-4">
-                    <?php
-                    $books = [
-                        ['title' => 'The Great Adventure', 'author' => 'John Author', 'price' => '$19.99', 'rating' => 4.5, 'discount' => 20],
-                        ['title' => 'Ocean Mysteries', 'author' => 'Jane Writer', 'price' => '$24.99', 'rating' => 4.0, 'discount' => 0],
-                        ['title' => 'Mountain Dreams', 'author' => 'Alex Novelist', 'price' => '$17.99', 'rating' => 5.0, 'discount' => 15],
-                        ['title' => 'City Lights', 'author' => 'Sarah Author', 'price' => '$21.99', 'rating' => 3.5, 'discount' => 0]
-                    ];
-                    
-                    foreach ($books as $book) {
-                        echo '
-                        <div class="col-md-3">
-                            <div class="card book-card h-100">
-                                ' . ($book['discount'] > 0 ? '<span class="discount-badge">-' . $book['discount'] . '%</span>' : '') . '
-                                <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&w=400&h=250&fit=crop" class="card-img-top" alt="' . $book['title'] . '">
-                                <div class="card-body">
-                                    <h6 class="card-title">' . $book['title'] . '</h6>
-                                    <p class="text-muted small">By ' . $book['author'] . '</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="text-primary fw-bold">' . $book['price'] . '</span>
-                                        <span class="text-warning">';
-                        
-                        // Display star ratings
-                        $fullStars = floor($book['rating']);
-                        $hasHalfStar = ($book['rating'] - $fullStars) >= 0.5;
-                        
-                        for ($i = 0; $i < $fullStars; $i++) {
-                            echo '<i class="bi bi-star-fill"></i>';
-                        }
-                        if ($hasHalfStar) {
-                            echo '<i class="bi bi-star-half"></i>';
-                        }
-                        for ($i = $fullStars + ($hasHalfStar ? 1 : 0); $i < 5; $i++) {
-                            echo '<i class="bi bi-star"></i>';
-                        }
-                        
-                        echo '
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>';
-                    }
-                    ?>
-                </div>
-            </div>
-        </section>
+            <?php endforeach; ?>
+        </div>
         <?php
     }
-
+    
     public function form_content($conf, $ObjForm = null, $ObjFncs = null) {
+        $current_page = basename($_SERVER['PHP_SELF']);
         ?>
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow">
-                    <div class="card-body p-4">
-                        <?php 
-                        $currentPage = basename($_SERVER['PHP_SELF']);
-                        
-                        if ($currentPage == 'forms/signup.php') {
-                            if ($ObjForm && method_exists($ObjForm, 'forms/signup')) {
-                                $ObjForm->signup($conf, $ObjFncs); 
-                            } else {
-                                echo '<div class="alert alert-danger">Signup form is not available</div>';
-                            }
-                        } elseif ($currentPage == 'forms/signin.php') {
-                            if ($ObjForm && method_exists($ObjForm, 'forms/signin')) {
-                                $ObjForm->signin(); 
-                            } else {
-                                echo '<div class="alert alert-danger">Signin form is not available</div>';
-                            }
+        <div class="row align-items-md-stretch">
+            <div class="col-md-6">
+                <div class="h-100 p-5 bg-light rounded-3">
+                    <?php 
+                    if ($current_page == 'signup.php') {
+                        if ($ObjForm && method_exists($ObjForm, 'signup')) {
+                            $ObjForm->signup($conf, $ObjFncs); 
                         } else {
-                            echo '<div class="alert alert-warning">Form content not configured for this page</div>';
+                            echo "<div class='alert alert-danger'>Signup form is not available</div>";
                         }
-                        ?>
-                    </div>
+                    } elseif ($current_page == 'signin.php') {
+                        if ($ObjForm && method_exists($ObjForm, 'signin')) {
+                            $ObjForm->signin(); 
+                        } else {
+                            echo "<div class='alert alert-danger'>Signin form is not available</div>";
+                        }
+                    } 
+                    ?>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="h-100 p-5 text-white bg-primary rounded-3">
+                    <h2>About Our Bookstore</h2>
+                    <p>Discover a world of knowledge and imagination at <?php print $conf['site_name']; ?>. We offer a wide selection of books across all genres.</p>
+                    <ul>
+                        <li>Thousands of titles available</li>
+                        <li>Competitive prices</li>
+                        <li>Fast shipping</li>
+                        <li>Expert recommendations</li>
+                    </ul>
+                    <a class="btn btn-light" href="about.php">Learn More</a> 
                 </div>
             </div>
         </div>
         <?php
     }
-
+    
+    public function alert_message($type, $message) {
+        ?>
+        <div class="alert alert-<?php print $type; ?> alert-dismissible fade show" role="alert">
+            <?php print $message; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <?php
+    }
+    
     public function footer($conf) {
         ?>
-            </div> <!-- Close container -->
-        </main>
-
-        <!-- Footer -->
-        <footer class="bg-dark text-white py-4 mt-5">
-            <div class="container">
+            <footer class="pt-3 mt-4 text-body-secondary border-top">
                 <div class="row">
-                    <div class="col-md-6">
-                        <p class="mb-0">&copy; <?php print date("Y"); ?> <?php print $conf['site_name']; ?>. All rights reserved.</p>
+                    <div class="col-md-4">
+                        <h5><?php print $conf['site_name']; ?></h5>
+                        <p>Your favorite online bookstore since <?php print date("Y"); ?>.</p>
                     </div>
-                    <div class="col-md-6 text-md-end">
-                        <a href="#" class="text-white text-decoration-none me-3">Privacy Policy</a>
-                        <a href="#" class="text-white text-decoration-none">Terms of Service</a>
+                    <div class="col-md-4">
+                        <h5>Quick Links</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="./">Home</a></li>
+                            <li><a href="books.php">All Books</a></li>
+                            <li><a href="categories.php">Categories</a></li>
+                            <li><a href="about.php">About Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Contact</h5>
+                        <p>Email: info@<?php print strtolower($conf['site_name']); ?>.com<br>
+                        Phone: (555) 123-4567</p>
                     </div>
                 </div>
-            </div>
-        </footer>
-
-        <!-- Bootstrap JS -->
-        <script src="<?php print $conf['site_url']; ?>js/bootstrap.bundle.min.js"></script>
-        
-        <!-- Custom Script -->
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Simple animation for cards
-                const cards = document.querySelectorAll('.category-card, .book-card');
-                cards.forEach((card, index) => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    setTimeout(() => {
-                        card.style.transition = 'all 0.6s ease';
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }, index * 100);
-                });
-            });
-        </script>
-    </body>
+                <div class="text-center mt-3">
+                    <p>Copyright &copy; <?php print date("Y"); ?> <?php print $conf['site_name']; ?> - All Rights Reserved</p> 
+                </div>
+            </footer>
+         </div>
+      </main>
+       <script src="<?php print $conf['site_url']; ?>js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+     
+   </body>
 </html>
         <?php
     }

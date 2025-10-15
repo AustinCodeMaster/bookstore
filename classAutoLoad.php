@@ -1,5 +1,8 @@
 <?php
-require 'Plugins/PHPMailer/vendor/autoload.php';
+require 'vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 require_once "conf.php";
 
 $directories = ["Forms", "Layouts", "Global"];
