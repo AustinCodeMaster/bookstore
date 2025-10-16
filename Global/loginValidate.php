@@ -1,8 +1,6 @@
 <?php
-var_dump($_POST); // see what PHP receives
-
 require_once __DIR__ . '/dataBaseConfigurations.php';
 
 $UserObject = new dataBaseConfigurations();
-$UserObject->databaseinsertion();
+$UserObject->userLogin();
 ?>

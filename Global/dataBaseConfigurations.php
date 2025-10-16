@@ -1,86 +1,89 @@
 <?php
+require_once __DIR__ . '/../vendor/autoload.php';
 
-//require_once '../classAutoLoad.php'; // Include the autoloader
-require "sendMail.php";
+use Dotenv\Dotenv;
 
-class dataBaseConfigurations
-{
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
 
+class dataBaseConfigurations {
+    private $conn;
 
-    public function databaseinsertion()
-    {
-        $ObjSendMail = new sendMail();
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $conn = new mysqli('localhost', 'bookstore_user', 'maria123#', 'bookstore');
-            $mailCnt = [
-                'name_from' => 'joyce mbiriri',
-                'email_from' => 'mbiririjoyce6@gmail.com',
-                'subject' => 'Connection Verified.',
-                'body' => 'This is to test for successful database connectivity'
-            ];
-
-            $username = $_POST['fullname'];
-            $email = $_POST['email'];
-            $user_password = $_POST['password'];
-            $GLOBALS['user_data'] = array(
-                'name' => $username,
-                'email' => $email,
-                'password' => $user_password,
-            );
-            //Insert the user into the database
-            $stmt = $conn->prepare("INSERT INTO users (username,email,user_password) VALUES (?,?,?)");
-            //Bind 3 strings: Name, Email, Password
-            $stmt->bind_param("sss", $username, $email, $user_password);
-
-            //We would like to send a verification email
-            if ($stmt->execute()) {
-                $ObjSendMail->send_Mail($mailCnt);
-                echo "Registration successful, check your email to verify";
-            } else {
-                echo "Error: " . $stmt->error;
-            }
-        }
+    public function __construct() {
+        $this->connect();
     }
-    // Add this method to your databaseconnection class
-    public function displayUsers()
-    {
-        global $conn;
-        $username = $_GET['fullname'];
-        $user_password = $_GET['password'];
-        $GLOBALS['user_data_retrieval'] = array(
-            'name' => $username,
-            'password' => $user_password
+
+    private function connect() {
+        $this->conn = new mysqli(
+            $_ENV['DB_HOST'],
+            $_ENV['DB_USER'],
+            $_ENV['DB_PASS'],
+            $_ENV['DB_NAME']
         );
 
-        try {
-            $stmt = $conn->prepare("SELECT username, email FROM users WHERE fullname=? AND user_password=?");
-            $stmt->bind_param('ss', $username, $user_password);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            if ($result->num_rows > 0) {
-                echo "<table border='1' style='border-collapse: collapse; width: 100%;'>";
-                echo "<thead>";
-                echo "<tr><th>Username</th><th>Email</th></tr>";
-                echo "</thead>";
-                echo "<tbody>";
-
-                //A while loop to display users
-
-                // while ($row = $result->fetch_assoc()) {
-                //     echo "<tr>";
-                //     echo "<td>" . htmlspecialchars($row['username'] ?? '') . "</td>";
-                //     echo "<td>" . htmlspecialchars($row['email'] ?? '') . "</td>";
-                //     echo "</tr>";
-                // }
-
-                echo "</tbody>";
-                echo "</table>";
-            } else {
-                echo "<script>alert('Invalid username or Password')</script>";
-            }
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
+        if ($this->conn->connect_error) {
+            die("Database connection failed: " . $this->conn->connect_error);
         }
     }
+
+   public function databaseinsertion() {
+    // Get form inputs safely
+   $fullName = $_POST['fullName'] ?? '';
+$email = $_POST['email'] ?? '';
+$password = $_POST['password'] ?? '';
+$confirmPassword = $_POST['confirmPassword'] ?? '';
+
+if (empty($fullName) || empty($email) || empty($password) || empty($confirmPassword)) {
+    echo "Please fill in all fields.";
+    return;
 }
+
+
+    // Hash the password securely
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    // Prepare SQL statement (prevents SQL injection)
+    $stmt = $this->conn->prepare("INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)");
+     $stmt->bind_param("sss", $fullName, $email, $hashedPassword);
+
+    // Execute query
+    if ($stmt->execute()) {
+        echo "✅ User registered successfully!";
+    } else {
+        echo "❌ Error: " . $stmt->error;
+    }
+
+    $stmt->close();
+}
+public function userLogin() {
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    if (empty($email) || empty($password)) {
+        echo "Please fill in all fields.";
+        return;
+    }
+
+    $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 0) {
+        echo "No user found with that email.";
+        return;
+    }
+
+    $user = $result->fetch_assoc();
+
+    if (password_verify($password, $user['password_hash'])) {
+        echo "Login successful! Welcome, " . htmlspecialchars($user['name']) . ".";
+        // You can now start a session or redirect
+    } else {
+        echo "Incorrect password.";
+    }
+}
+
+    }
+
+?>

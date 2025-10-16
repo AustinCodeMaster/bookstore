@@ -19,7 +19,9 @@
     </div>
 
 
+       
     <form id="signupForm" method="post" action="/bookstore/Global/validateForm.php">
+
         <div>
             <label for="fullName">Full Name</label>
             <input type="text" id="fullname" name="fullName" required>
