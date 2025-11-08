@@ -8,9 +8,9 @@
 */
 
 $dbHost = "localhost";
-$dbUser = "your_username";
-$dbPass = "your_password";
-$dbName = "your_database_name";
+$dbUser = "root";
+$dbPass = "ManCity@254";
+$dbName = "migration1";
 
 // Mail Configuration
 $mailHost = "smtp.gmail.com";
