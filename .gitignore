@@ -1,3 +1,5 @@
 vendor/
 .env
 Global/dataBaseConfigurations.php
+composer.json
+composer.lock
