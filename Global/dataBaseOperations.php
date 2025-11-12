@@ -150,7 +150,7 @@ class databaseOperations
                 $setNewPassword->execute();
                 $this->layout1->header($conf);
                 $this->FormObject->verification_form();
-                // echo "<script>window.location.href='/iap-configurations/index.php';</script>";
+                // echo "<script>window.location.href='/bookstore/index.php';</script>";
             } else {
                 echo "<script>alert('Bad Credentials');
                 window.location.href = '/bookstore/index.php';</script>";
