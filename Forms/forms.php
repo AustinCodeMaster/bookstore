@@ -6,7 +6,7 @@ class forms
     {
 ?>
 
-        <form method="post" action="/iap-configurations/Global/databaseOperations.php" id="signUp">
+        <form method="post" action="/bookstore/Global/databaseOperations.php" id="signUp">
             <input type="hidden" name="action" value="signup">
             <div class="container-fluid">
                 <h2>Sign Up</h2>
@@ -42,7 +42,7 @@ class forms
     public function login()
     {
     ?>
-        <form method="post" action="/iap-configurations/Global/dataBaseOperations.php" id="signin">
+        <form method="post" action="/bookstore/Global/dataBaseOperations.php" id="signin">
             <input type="hidden" name="action" value="login">
             <div class="container-fluid">
                 <h2>Sign in</h2>
@@ -60,7 +60,7 @@ class forms
                 </div>-->
                 <div class="mb-3">
                     <?php $this->submit_button("Sign In", "signin"); ?><br> <a href="#">Don't have an account, Sign up</a><br>
-                    <a href="/iap-configurations/Global/passwordReset.php">Forgot Password?</a>
+                    <a href="/bookstore/Global/passwordReset.php">Forgot Password?</a>
                 </div>
             </div>
         </form>
@@ -102,7 +102,7 @@ class forms
     public function verification_form()
     {
     ?>
-        <form method="post" action="/iap-configurations/Global/verifyNewUser.php" id="verificationCodeForm">
+        <form method="post" action="/bookstore/Global/verifyNewUser.php" id="verificationCodeForm">
             <div class="container-fluid">
                 <h2>Enter Code</h2>
                 <p>A code was sent to your email Address. Place the code here: </p>
@@ -120,7 +120,7 @@ class forms
     public function password_reset_form()
     {
     ?>
-        <form method="post" action="/iap-configurations/Global/databaseOperations.php" id="verificationCodeForm">
+        <form method="post" action="/bookstore/Global/databaseOperations.php" id="verificationCodeForm">
             <input type="hidden" name="action" value="passwordReset">
             <div class="container-fluid">
                 <h2>Reset Password</h2>

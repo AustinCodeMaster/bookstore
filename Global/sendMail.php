@@ -1,7 +1,7 @@
 <?php
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
-require_once 'C:/Apache24/htdocs/iap-configurations/Plugins/PHPMailer/vendor/autoload.php';
+require_once 'C:/Apache24/htdocs/bookstore/Supplementary_Pluggin_5/vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -21,12 +21,12 @@ class sendMail
             //Server settings
             $mail->SMTPDebug = SMTP::DEBUG_OFF;                      //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = $conf['smtp_host'];                     //Set the SMTP server to send through
+            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = $conf['smtp_user'];                     //SMTP username
-            $mail->Password   = $conf['smtp_pass'];                               //SMTP password
+            $mail->Username   = 'judyjwangui@gmail.com';                     //SMTP username
+            $mail->Password   = 'saeu iobw bzit qilk';                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = $conf['smtp_port'];                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
             if (isset($_SESSION['send_email_to_signup'])) {
@@ -38,7 +38,7 @@ class sendMail
                 $mail->Subject = $mailCnt['subject'];
                 $mail->Body    = 'Hello ' .
                     $GLOBALS['user_data']['name'] .
-                    ", Welcome to Benir's Application<br>Your Verification code is <strong>" .
+                    ", Welcome to Bookstore Application<br>Your Verification code is <strong>" .
                     $GLOBALS['user_data']['verification_code'] . "</strong>";
 
 

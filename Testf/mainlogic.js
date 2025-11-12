@@ -30,9 +30,11 @@ function addBook(event) {
                 document.getElementById("addBookForm").reset();
                 console.log("Insertion successful");
               } else {
+                console.log("here");
                 messageDiv.innerHTML = `<div class="alert alert-danger">${response.message}</div>`;
               }
             } catch (error) {
+              console.log("here1");
               messageDiv.innerHTML = `<div class="alert alert-danger">Invalid server response.</div>`;
             }
           } else {
@@ -50,7 +52,7 @@ function addBook(event) {
 
 function addToCart(userId, book_name, author) {
   const xhr = new XMLHttpRequest();
-  xhr.open("POST", "/iap-configurations/testf/addtoCart.php", true);
+  xhr.open("POST", "/bookstore/testf/addtoCart.php", true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
   xhr.onreadystatechange = function () {
@@ -73,7 +75,7 @@ function addToCart(userId, book_name, author) {
 }
 //Redirects the user to the cart page
 function goToCart(userId) {
-  window.location.href = "/iap-configurations/testf/cart.html?user_id=" + userId;
+  window.location.href = "C://Apache24/htdocs/bookstore/testf/cart.html?user_id=" + userId;
 }
 
 function viewCart() {

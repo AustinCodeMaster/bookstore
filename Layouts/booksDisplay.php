@@ -18,17 +18,15 @@ class booksDisplay
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#home">Home</a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="#books">Books</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="/iap-configurations/Global/logout.php" id="signout"><?php print "Sign Out" ?></a>
+                            <a class="nav-link " href="/bookstore/Global/logout.php" id="signout"><?php print "Sign Out" ?></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/iap-configurations/Global/admin.html">Admin</a>
+                            <a class="nav-link" href="/bookstore/Global/admin.html">Admin</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#categories">Categories</a>
@@ -43,9 +41,6 @@ class booksDisplay
                             onclick="goToCart(1)">
                             <!-- Cart -->
                             <i class="bi bi-cart-plus"></i> <!-- Add to cart -->
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartCount">
-                                0
-                            </span>
                         </button>
                     </div>
                 </div>

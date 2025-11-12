@@ -1,6 +1,6 @@
 <?php
 
-require_once "classAutoLoad.php";
+require_once "C://Apache24/htdocs/bookstore/classAutoLoad.php";
 // if (isset($_GET['error']) && $_GET['error'] === 'user_exists') {
 //     echo "<script>alert('A user with this username or email already exists. Please try another.');</script>";
 // }

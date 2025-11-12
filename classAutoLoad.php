@@ -1,9 +1,6 @@
 <?php
-require 'vendor/autoload.php';
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-require_once "conf.php";
+require 'Supplementary_Pluggin_5/vendor/autoload.php';
+require_once "C://Apache24/htdocs/bookstore/conf.php";
 
 $directories = ["Forms", "Layouts", "Global"];
 
@@ -16,9 +13,8 @@ spl_autoload_register(function ($className) use ($directories) {
         }
     }
 });
-//Create an instance of HelloWorld
 
-//$ObjSendMail = new sendMail();
+
+$ObjSendMail = new sendMail();
 $form = new forms();
-//$layout = new layouts();
-$dbaseObject = new dataBaseConfigurations();
+$layout = new LayoutManager();

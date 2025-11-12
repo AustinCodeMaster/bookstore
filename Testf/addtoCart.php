@@ -1,6 +1,6 @@
 <?php
 header("Content-Type: text/plain");
-include 'C://Apache24/htdocs/iap-configurations/conf.php';
+include 'C://Apache24/htdocs/bookstore/conf.php';
 
 $user_id = $_POST['user_id'] ?? null;
 $book_name = $_POST['book_name'] ?? null;

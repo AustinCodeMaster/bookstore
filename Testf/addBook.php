@@ -1,6 +1,6 @@
 <?php
 header("Content-Type: application/json");
-include "/iap-configurations/conf.php"; // your database connection
+include "/bookstore/conf.php"; // your database connection
 
 $book_name = $_POST['book_name'] ?? '';
 $author = $_POST['author'] ?? '';

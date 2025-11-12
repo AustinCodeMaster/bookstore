@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json'); // send response as JSON
-require 'C://Apache24/htdocs/iap-configurations/conf.php';
+require 'C://Apache24/htdocs/bookstore/conf.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
